@@ -1,0 +1,8 @@
+{
+  "name": "ConnectX | Infrastructure SaaS",
+  "description": "Plataforma de activación cognitiva y validación técnica para monetización de intención en e-commerce y sourcing global.",
+  "requestFramePermissions": [
+    "microphone",
+    "camera"
+  ]
+}
