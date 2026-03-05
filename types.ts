@@ -2,7 +2,7 @@
 export type SubscriptionTier = 'FREE' | 'PRO_EXECUTIVE' | 'TITAN_ELITE';
 export type UserIntent = 'Personal_Curiosity' | 'Company_Employee' | 'Workshop_Owner' | 'Fleet_Manager';
 export type Language = 'es' | 'en' | 'de' | 'zh' | 'fr' | 'ja';
-export type Platform = 'autosocio' | 'connectx' | 'ecosystem';
+export type Platform = 'autosocio' | 'connectx' | 'homesocio' | 'legalsocio' | 'medsocio' | 'consultsocio' | 'ecosystem';
 
 /**
  * ECONOMIC OS TYPES (Capa 1 & 2)
@@ -29,6 +29,7 @@ export interface Niche {
   icon: string;
   color: string;
   createdAt: string;
+  externalUrl?: string;
 }
 
 export interface NicheEntity {

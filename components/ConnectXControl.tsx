@@ -130,13 +130,13 @@ const ConnectXControl: React.FC<ConnectXControlProps> = ({ currentPhase, metrics
             <div className="space-y-4">
                 <div className="inline-flex items-center gap-3 px-5 py-2 bg-indigo-500/20 border border-indigo-500/30 rounded-full">
                     <div className="w-2 h-2 bg-indigo-400 rounded-full animate-pulse"></div>
-                    <span className="text-indigo-400 text-[10px] font-black uppercase tracking-[0.4em]">Orquestador Económico Universal</span>
+                    <span className="text-indigo-400 text-[10px] font-black uppercase tracking-[0.4em]">Orquestador Cognitivo AutoSource</span>
                 </div>
                 <h2 className="text-4xl md:text-8xl font-black text-white uppercase tracking-tighter leading-none italic">
-                  Connect<span className="text-indigo-500">X</span> Infrastructure
+                  Connect<span className="text-indigo-500">IQ</span> AutoSource
                 </h2>
                 <p className="text-gray-400 font-light max-w-3xl mx-auto text-lg md:text-xl leading-relaxed px-4">
-                  "Infraestructura de Activación Cognitiva para la monetización de intención y optimización de activos globales mediante validación técnica rigurosa."
+                  "Infraestructura de Activación Cognitiva Connect IQ para la monetización de intención y optimización de activos globales mediante validación técnica rigurosa."
                 </p>
             </div>
 
@@ -231,10 +231,10 @@ const ConnectXControl: React.FC<ConnectXControlProps> = ({ currentPhase, metrics
                     <div className="h-px bg-indigo-500/20 flex-grow"></div>
                     <div className="flex flex-col items-center gap-2">
                         <div className="px-6 py-2 bg-indigo-600 rounded-full shadow-[0_0_30px_rgba(79,70,229,0.5)]">
-                            <h3 className="text-[10px] font-black text-white uppercase tracking-[0.6em]">DICTAMEN DE INTELIGENCIA ESTRATÉGICA</h3>
+                            <h3 className="text-[10px] font-black text-white uppercase tracking-[0.6em]">DICTAMEN DE INTELIGENCIA CONNECT IQ</h3>
                         </div>
                         <div className="flex items-center gap-2">
-                            <span className="text-[8px] text-gray-500 font-black uppercase tracking-widest">Confianza del Sistema:</span>
+                            <span className="text-[8px] text-gray-500 font-black uppercase tracking-widest">Confianza AutoSource:</span>
                             <span className="text-[10px] text-indigo-400 font-black">{(intentResult.confidence_score * 100).toFixed(0)}%</span>
                         </div>
                     </div>

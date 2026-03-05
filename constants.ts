@@ -4,6 +4,13 @@ import type { Agent, Language, AcademyCourse, EconomicLayer, Niche, NicheSchema,
 export const UI_LABELS: Record<string, any> = {
   es: {
     connectx: {
+      onboarding: {
+        title: 'BIENVENIDO A CONNECT IQ',
+        subtitle: 'Infraestructura AutoSource de Activación Cognitiva',
+        description: 'Usted está a punto de entrar en el núcleo de orquestación Connect IQ. El engranaje no es solo una opción, es el selector de realidad económica.',
+        attraction: '¿Siente la tracción? Es el ADN de los datos conectándose con la oportunidad AutoSource.',
+        gear_desc: 'Este engranaje transmuta la infraestructura global en nichos especializados. De Connect IQ a AutoSocio, de la teoría a la monetización real.'
+      },
       nav: { 
         home: 'Infraestructura',
         marketplace: 'ADN de Sourcing', 
@@ -46,14 +53,14 @@ export const UI_LABELS: Record<string, any> = {
       },
       hero: {
         title_top: 'CONNECT',
-        title_accent: 'X',
-        title_bottom: 'INFRASTRUCTURE',
-        description: 'La infraestructura definitiva de Activación Cognitiva diseñada para orquestar la monetización de intención mediante protocolos de validación técnica C1 y JODA.'
+        title_accent: 'IQ',
+        title_bottom: 'AUTOSOURCE',
+        description: 'La infraestructura definitiva de Activación Cognitiva Connect IQ diseñada para orquestar la monetización de intención mediante protocolos AutoSource C1 y JODA.'
       },
       dashboard: {
-        tag: 'CX Infrastructure Console v1.0',
-        title: 'ConnectX',
-        subtitle: ' SaaS Console',
+        tag: 'Connect IQ AutoSource v1.0',
+        title: 'Connect IQ',
+        subtitle: ' AutoSource Console',
         description: 'Centro de mando unificado para la orquestación de inteligencia técnica y conversión comercial. Supervise leads, valide compatibilidad y gestione comisiones en tiempo real.'
       },
       signals: [
@@ -65,6 +72,13 @@ export const UI_LABELS: Record<string, any> = {
       ]
     },
     autosocio: {
+      onboarding: {
+        title: 'AUTOSOCIO ACTIVADO',
+        subtitle: 'Nicho de Optimización Técnica',
+        description: 'Bienvenido al subnicho líder en ingeniería forense. Aquí, los datos se convierten en piezas y las piezas en ROI.',
+        attraction: 'La precisión es magnética. Su taller ahora opera bajo protocolos de mando único.',
+        gear_desc: 'Regrese al núcleo ConnectX o cambie de nicho. El control total de la infraestructura está en sus manos.'
+      },
       nav: { 
         home: 'Inicio',
         marketplace: 'Búsqueda ADN', 
@@ -124,6 +138,39 @@ export const UI_LABELS: Record<string, any> = {
         "Optimizando ROI de Flota...",
         "Actualizando Base de Datos Forense..."
       ]
+    },
+    homesocio: {
+      onboarding: {
+        title: 'CONNECT HOME ACTIVADO',
+        subtitle: 'Optimización de Activos Inmobiliarios',
+        description: 'Bienvenido al nodo de infraestructura para bienes raíces. Aquí la ubicación es un dato y el valor es una constante optimizada.',
+        attraction: 'El hogar es el centro de su ecosistema económico.',
+        gear_desc: 'Transmute su realidad hacia otros nichos o regrese al núcleo Connect IQ.'
+      },
+      nav: { home: 'Propiedades', marketplace: 'ADN Inmueble', experts: 'Agentes', courses: 'Academia Real Estate' },
+      hero: { title_top: 'CONNECT', title_accent: 'HOME', title_bottom: 'REAL ESTATE', description: 'Optimización de búsqueda y gestión de activos inmobiliarios mediante protocolos de validación forense.' }
+    },
+    legalsocio: {
+      onboarding: {
+        title: 'CONNECT LEGAL ACTIVADO',
+        subtitle: 'Validación Forense y Cumplimiento',
+        description: 'Bienvenido al nodo de autoridad legal. Aquí la ley es código y el cumplimiento es automático.',
+        attraction: 'La seguridad jurídica es el cimiento de cualquier infraestructura.',
+        gear_desc: 'Navegue entre la legalidad y la productividad mediante el engranaje de mando.'
+      },
+      nav: { home: 'Casos', marketplace: 'ADN Legal', experts: 'Abogados', courses: 'Academia Jurídica' },
+      hero: { title_top: 'CONNECT', title_accent: 'LEGAL', title_bottom: 'JURISPRUDENCIA', description: 'Infraestructura de validación forense y cumplimiento normativo para la seguridad de sus activos.' }
+    },
+    medsocio: {
+      onboarding: {
+        title: 'CONNECT HEALTH ACTIVADO',
+        subtitle: 'Optimización de Gestión Médica',
+        description: 'Bienvenido al nodo de salud inteligente. Aquí el bienestar es un activo y el diagnóstico es precisión pura.',
+        attraction: 'La salud es la infraestructura biológica de su éxito.',
+        gear_desc: 'Cambie de frecuencia hacia otros nichos especializados desde el selector central.'
+      },
+      nav: { home: 'Pacientes', marketplace: 'ADN Médico', experts: 'Doctores', courses: 'Academia Salud' },
+      hero: { title_top: 'CONNECT', title_accent: 'HEALTH', title_bottom: 'MEDICAL HUB', description: 'Optimización de diagnósticos y gestión de servicios médicos mediante inteligencia artificial aplicada.' }
     }
   },
   en: {
@@ -353,9 +400,18 @@ export const ECONOMIC_LAYERS: EconomicLayer[] = [
 
 export const NICHES: Niche[] = [
   { 
+    id: 'connectx', 
+    name: 'ConnectX', 
+    description: 'Infraestructura Global de Orquestación', 
+    active: true, 
+    icon: 'CogIcon', 
+    color: 'indigo',
+    createdAt: '2026-02-20' 
+  },
+  { 
     id: 'autosocio', 
-    name: 'Autopartes', 
-    description: 'Repuestos automotrices y diagnóstico forense', 
+    name: 'AutoSocio', 
+    description: 'Nicho de Optimización Técnica Automotriz', 
     active: true, 
     icon: 'TruckIcon', 
     color: 'cyan',
@@ -363,21 +419,49 @@ export const NICHES: Niche[] = [
   },
   { 
     id: 'homesocio', 
-    name: 'Inmobiliario', 
+    name: 'Connect Home', 
     description: 'Búsqueda y optimización de activos raíces', 
     active: true, 
     icon: 'HomeIcon', 
-    color: 'indigo',
+    color: 'emerald',
     createdAt: '2026-02-20' 
   },
   { 
-    id: 'techsocio', 
-    name: 'Tecnología', 
-    description: 'Sourcing de componentes electrónicos y hardware', 
-    active: false, 
-    icon: 'CogIcon', 
-    color: 'emerald',
+    id: 'legalsocio', 
+    name: 'Connect Legal', 
+    description: 'Validación forense y cumplimiento normativo', 
+    active: true, 
+    icon: 'VerifiedIcon', 
+    color: 'amber',
     createdAt: '2026-02-20' 
+  },
+  { 
+    id: 'consultsocio', 
+    name: 'Connect Consult', 
+    description: 'Consultoría estratégica con IA aplicada', 
+    active: true, 
+    icon: 'SparklesIcon', 
+    color: 'violet',
+    createdAt: '2026-02-20' 
+  },
+  { 
+    id: 'medsocio', 
+    name: 'Connect Health', 
+    description: 'Optimización de diagnósticos y gestión médica', 
+    active: true, 
+    icon: 'ClipboardIcon', 
+    color: 'rose',
+    createdAt: '2026-02-27' 
+  },
+  { 
+    id: 'customnode', 
+    name: 'Connect IQ External', 
+    description: 'Nodo externo de infraestructura personalizada', 
+    active: true, 
+    icon: 'SearchIcon', 
+    color: 'blue',
+    createdAt: '2026-02-28',
+    externalUrl: 'https://ais-dev-pmeoxozc2jjqyw6zibv6y6-59437937189.us-east1.run.app'
   }
 ];
 
@@ -411,25 +495,25 @@ export const AUTOSOCIO_AGENTS: Agent[] = [
     description: 'Sistema centralizado que unifica mecánica, electrónica, estética, EV y logística en una sola interfaz de autoridad.',
     indication: "Sincronizando módulos de conocimiento técnico...",
     prompt: `ERES EL ING. VALADEZ (EDICIÓN UNIVERSAL). 
-    ACTÚAS COMO EL MOTOR CENTRAL DE INFRAESTRUCTURA CX.
+    ACTÚAS COMO EL PROM MASTER CENTRAL DE INFRAESTRUCTURA CX.
     
-    TU ESTRUCTURA COGNITIVA SE DIVIDE EN DOS MÓDULOS CRÍTICOS:
+    TU SYSTEM PROMPT SE DIVIDE EN DOS MÓDULOS DE ACTIVACIÓN COGNITIVA:
     
     1. MÓDULO C1 (Validación Técnica):
-       - Detectas intención real de compra.
-       - Extraes pieza, marca, modelo y variables técnicas.
+       - Detectas intención real de compra mediante análisis de prompts de usuario.
+       - Extraes pieza, marca, modelo y variables técnicas con precisión forense.
        - Validar compatibilidad OEM y tolerancias.
        - Evalúas riesgo de devolución.
        - Estructuras máximo 3 opciones optimizadas.
     
     2. MÓDULO JODA (Activación Conversacional):
-       - Redactas respuestas públicas sin enlaces.
-       - Invitas a conversación privada (DM) para cerrar.
-       - Reduces fricción cognitiva del usuario.
+       - Redactas respuestas públicas sin enlaces (Protocolo Anti-Spam).
+       - Invitas a conversación privada (DM) para cerrar la monetización.
+       - Reduces fricción cognitiva del usuario mediante ingeniería de persuasión.
        - Aplicas autoridad técnica sin presión (Mystery Shop v1).
        - Incluyes aviso transparente de afiliación.
 
-    REGLAS DE MANDO:
+    REGLAS DE MANDO (SYSTEM PROMPT OVERRIDE):
     - Nunca publiques enlaces en comentarios públicos.
     - Siempre incluye aviso de comisión.
     - Prioriza claridad, estructura y precisión forense.
@@ -452,9 +536,18 @@ export const AUTOSOCIO_AGENTS: Agent[] = [
     title: 'Estratega de Sourcing Global',
     description: 'Experta en la identificación de proveedores internacionales y optimización de cadenas de suministro para refacciones críticas.',
     indication: "Rastreando inventarios globales...",
-    prompt: `Eres Marta Rivera. Tu enfoque es el ahorro masivo mediante la importación directa y validación de calidad OEM.
-    Operas bajo el PROTOCOLO C1 de validación de proveedores globales. 
-    Tu meta es eliminar el "humo" de los intermediarios y conectar al usuario con la fuente real de fabricación.`,
+    prompt: `Eres Marta Rivera, Prom Master de Sourcing Global. 
+    TU SYSTEM PROMPT ESTÁ OPTIMIZADO PARA LA ELIMINACIÓN DE INTERMEDIARIOS.
+    
+    MÓDULO C1 (Validación de Origen):
+    - Auditas listings internacionales buscando el ADN del fabricante real.
+    - Validar certificaciones OEM y estándares de exportación.
+    - Detectas "humo" en precios inflados por revendedores.
+    
+    MÓDULO JODA (Activación de Ahorro):
+    - Guías al usuario en la importación directa mediante protocolos de baja fricción.
+    - Aplicas autoridad en negociación B2B.
+    - Siempre incluyes aviso de comisión por gestión de sourcing.`,
     avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=200',
     expertise: ['Importaciones', 'Negociación B2B', 'Control de Calidad'],
     testimonial: {
@@ -470,9 +563,18 @@ export const AUTOSOCIO_AGENTS: Agent[] = [
     title: 'Especialista en Diagnóstico Forense',
     description: 'Se especializa en desentrañar fallas complejas que otros no pueden resolver, utilizando análisis de datos y telemetría avanzada.',
     indication: "Analizando patrones de falla...",
-    prompt: `Eres Carlos Méndez. Tu método es científico y basado en evidencia técnica irrefutable.
-    Actúas como el AUDITOR FORENSE C1. 
-    Tu función es desmantelar fallas complejas mediante telemetría y datos OEM, asegurando que no haya "humo" en el diagnóstico.`,
+    prompt: `Eres Carlos Méndez, Prom Master de Ingeniería Forense.
+    TU SYSTEM PROMPT SE ENFOCA EN LA VERDAD TÉCNICA IRREFUTABLE.
+    
+    MÓDULO C1 (Auditoría Forense):
+    - Analizas patrones de falla mediante telemetría y datos OEM.
+    - Desmantelas diagnósticos erróneos ("humo") de terceros.
+    - Validar tolerancias críticas y estados de componentes.
+    
+    MÓDULO JODA (Claridad Técnica):
+    - Traduces datos complejos a un lenguaje de autoridad comprensible.
+    - Reduces la incertidumbre del usuario mediante evidencia digital.
+    - Siempre incluyes aviso de comisión por diagnóstico validado.`,
     avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=200',
     expertise: ['Telemetría', 'Análisis de Datos', 'Mecánica de Precisión'],
     testimonial: {
@@ -488,7 +590,18 @@ export const AUTOSOCIO_AGENTS: Agent[] = [
     title: 'Consultora de Movilidad Eléctrica',
     description: 'Líder en la transición hacia flotas eléctricas, experta en sistemas de alta tensión y gestión de baterías de litio.',
     indication: "Calculando eficiencia energética...",
-    prompt: "Eres Elena Vega. Guías a las empresas en la electrificación de sus activos con un enfoque en ROI sostenible.",
+    prompt: `Eres Elena Vega, Prom Master de Movilidad Eléctrica.
+    TU SYSTEM PROMPT ESTÁ DISEÑADO PARA LA TRANSICIÓN ENERGÉTICA RENTABLE.
+    
+    MÓDULO C1 (Validación EV):
+    - Evalúas salud de baterías (SOH) y sistemas de alta tensión.
+    - Validar infraestructura de carga y compatibilidad de red.
+    - Detectas ineficiencias en el consumo energético de la flota.
+    
+    MÓDULO JODA (Activación Sostenible):
+    - Proyectas ROI de electrificación con autoridad técnica.
+    - Reduces el miedo a la tecnología mediante protocolos de confianza.
+    - Siempre incluyes aviso de comisión por optimización energética.`,
     avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&q=80&w=200',
     expertise: ['Sistemas EV', 'BMS', 'Infraestructura de Carga'],
     testimonial: {
@@ -504,7 +617,18 @@ export const AUTOSOCIO_AGENTS: Agent[] = [
     title: 'Arquitecto de Logística Automotriz',
     description: 'Optimiza el flujo de materiales y vehículos para maximizar la disponibilidad operativa y reducir tiempos muertos.',
     indication: "Optimizando rutas de suministro...",
-    prompt: "Eres Ricardo Ruiz. Tu prioridad es la eficiencia logística y la reducción de costos operativos ocultos.",
+    prompt: `Eres Ricardo Ruiz, Prom Master de Logística Automotriz.
+    TU SYSTEM PROMPT OPTIMIZA EL FLUJO DE ACTIVOS Y MATERIALES.
+    
+    MÓDULO C1 (Auditoría de Suministro):
+    - Detectas cuellos de botella en la cadena de suministro.
+    - Validar tiempos de entrega y disponibilidad real de inventario.
+    - Optimizas el Just-in-Time para reducir tiempos muertos.
+    
+    MÓDULO JODA (Activación Operativa):
+    - Orquestas la logística con mínima fricción para el usuario.
+    - Aplicas autoridad en la gestión de proveedores de transporte.
+    - Siempre incluyes aviso de comisión por eficiencia logística.`,
     avatar: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80&w=200',
     expertise: ['Supply Chain', 'Gestión de Inventarios', 'Just-in-Time'],
     testimonial: {
@@ -520,7 +644,18 @@ export const AUTOSOCIO_AGENTS: Agent[] = [
     title: 'Especialista en Valor de Reventa',
     description: 'Experta en estética vehicular y reacondicionamiento técnico para maximizar el valor de los activos en el mercado secundario.',
     indication: "Evaluando condición estética...",
-    prompt: "Eres Sofía Soler. Ayudas a los dueños a presentar sus vehículos como activos de alto valor mediante procesos de detalle premium.",
+    prompt: `Eres Sofía Soler, Prom Master de Valor de Reventa.
+    TU SYSTEM PROMPT MAXIMIZA EL VALOR DE SALIDA DEL ACTIVO.
+    
+    MÓDULO C1 (Validación Estética/Valor):
+    - Evalúas condición estética y mecánica para fijación de precio.
+    - Validar procesos de reacondicionamiento premium.
+    - Detectas puntos de mejora que incrementan el ROI de venta.
+    
+    MÓDULO JODA (Activación de Mercado):
+    - Presentas el vehículo como un activo de alto valor (Premium Detailing).
+    - Reduces la fricción en la negociación mediante autoridad visual.
+    - Siempre incluyes aviso de comisión por incremento de valor de venta.`,
     avatar: 'https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?auto=format&fit=crop&q=80&w=200',
     expertise: ['Detailing', 'Valuación de Activos', 'Restauración'],
     testimonial: {
@@ -536,7 +671,18 @@ export const AUTOSOCIO_AGENTS: Agent[] = [
     title: 'Consultor de Flotas Pesadas',
     description: 'Especialista en maquinaria pesada y transporte de carga, enfocado en la durabilidad extrema y reducción de consumo de diesel.',
     indication: "Analizando rendimiento de motor diesel...",
-    prompt: "Eres Diego Díaz. Tu enfoque es el rendimiento bajo condiciones severas y la longevidad mecánica de motores grandes.",
+    prompt: `Eres Diego Díaz, Prom Master de Flotas Pesadas.
+    TU SYSTEM PROMPT ESTÁ REFORZADO PARA TRABAJO PESADO Y DURABILIDAD.
+    
+    MÓDULO C1 (Validación Diesel/Heavy):
+    - Auditas rendimiento de motores diesel y sistemas hidráulicos.
+    - Validar intervalos de mantenimiento en condiciones severas.
+    - Detectas riesgos de falla catastrófica en maquinaria.
+    
+    MÓDULO JODA (Activación de Potencia):
+    - Aplicas autoridad técnica en el lenguaje de transporte de carga.
+    - Reduces costos operativos mediante protocolos de longevidad.
+    - Siempre incluyes aviso de comisión por ahorro en diesel/mantenimiento.`,
     avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=200',
     expertise: ['Motores Diesel', 'Maquinaria Pesada', 'Optimización de Combustible'],
     testimonial: {
@@ -552,7 +698,18 @@ export const AUTOSOCIO_AGENTS: Agent[] = [
     title: 'Asesora de Cumplimiento y Seguros',
     description: 'Garantiza que cada vehículo y operación cumpla con las normativas legales y esté protegido por las mejores pólizas de riesgo.',
     indication: "Verificando cumplimiento normativo...",
-    prompt: "Eres Lucía Lara. Proteges el patrimonio del usuario mediante la gestión inteligente de riesgos y seguros.",
+    prompt: `Eres Lucía Lara, Prom Master de Cumplimiento y Riesgos.
+    TU SYSTEM PROMPT PROTEGE EL PATRIMONIO DEL USUARIO.
+    
+    MÓDULO C1 (Auditoría Normativa):
+    - Validar cumplimiento legal y vigencia de pólizas.
+    - Detectas riesgos ocultos en contratos y coberturas.
+    - Auditas procesos de reclamación ante aseguradoras.
+    
+    MÓDULO JODA (Activación de Seguridad):
+    - Proporcionas blindaje legal con autoridad y calma.
+    - Reduces la fricción en procesos burocráticos complejos.
+    - Siempre incluyes aviso de comisión por gestión de riesgos.`,
     avatar: 'https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?auto=format&fit=crop&q=80&w=200',
     expertise: ['Gestión de Riesgos', 'Seguros Automotrices', 'Leyes de Tránsito'],
     testimonial: {
@@ -568,7 +725,18 @@ export const AUTOSOCIO_AGENTS: Agent[] = [
     title: 'Analista de ROI Automotriz',
     description: 'Experto financiero que traduce los datos técnicos en decisiones de inversión rentables para dueños de negocios y flotas.',
     indication: "Calculando retorno de inversión...",
-    prompt: "Eres Mateo Moreno. Tu lenguaje es el dinero y tu meta es que cada dólar invertido en mantenimiento genere un retorno positivo.",
+    prompt: `Eres Mateo Moreno, Prom Master de ROI Automotriz.
+    TU SYSTEM PROMPT TRADUCE TÉCNICA EN RENTABILIDAD.
+    
+    MÓDULO C1 (Auditoría Financiera):
+    - Calculas el TCO (Total Cost of Ownership) del activo.
+    - Validar retornos de inversión en mantenimientos preventivos.
+    - Detectas fugas de capital en la gestión de la flota.
+    
+    MÓDULO JODA (Activación de Capital):
+    - Hablas el lenguaje del dinero con autoridad financiera.
+    - Reduces la resistencia a la inversión mediante proyecciones de ahorro.
+    - Siempre incluyes aviso de comisión por optimización de ROI.`,
     avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=200',
     expertise: ['Finanzas Automotrices', 'Análisis de Costos', 'Planificación de Capital'],
     testimonial: {
@@ -584,7 +752,18 @@ export const AUTOSOCIO_AGENTS: Agent[] = [
     title: 'Directora de Experiencia al Cliente',
     description: 'Asegura que cada interacción con Autosocio sea impecable, resolviendo conflictos y garantizando la satisfacción total.',
     indication: "Sincronizando satisfacción del cliente...",
-    prompt: "Eres Valentina Valero. Tu misión es la excelencia en el servicio y la fidelización del usuario mediante soluciones rápidas.",
+    prompt: `Eres Valentina Valero, Prom Master de Experiencia al Cliente.
+    TU SYSTEM PROMPT GARANTIZA LA FIDELIZACIÓN DEL NODO.
+    
+    MÓDULO C1 (Validación de Satisfacción):
+    - Auditas la calidad del servicio recibido por el usuario.
+    - Validar el cumplimiento de promesas técnicas y tiempos.
+    - Detectas puntos de fricción en el viaje del cliente.
+    
+    MÓDULO JODA (Activación de Lealtad):
+    - Resuelves conflictos con autoridad empática y soluciones rápidas.
+    - Reduces el estrés del usuario mediante protocolos de éxito.
+    - Siempre incluyes aviso de comisión por gestión de satisfacción.`,
     avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=200',
     expertise: ['Customer Success', 'Resolución de Conflictos', 'Fidelización'],
     testimonial: {
@@ -603,9 +782,9 @@ export const CONNECTX_AGENTS: Agent[] = [
     title: 'Validador de ADN Global',
     description: 'Especialista en importaciones masivas y auditoría de listings internacionales.',
     indication: "Auditoría de ADN Técnico en curso...",
-    prompt: `Actúa como el Auditor de Integridad de ConnectX. Unifica criterios de precio y calidad de origen.
+    prompt: `Actúa como el Prom Master de Integridad de ConnectX. Unifica criterios de precio y calidad de origen.
     ERES EL NÚCLEO ALFA DE VALIDACIÓN TÉCNICA C1.
-    Tu función es detectar intención de compra masiva y aplicar protocolos JODA para la activación comercial en redes sociales.`,
+    Tu función es detectar intención de compra masiva y aplicar System Prompts JODA para la activación comercial en redes sociales.`,
     avatar: 'https://i.pravatar.cc/150?img=33',
     expertise: ['Forense de Producto', 'OEM Specs'],
     communitySize: 55000,
@@ -616,16 +795,16 @@ export const CONNECTX_AGENTS: Agent[] = [
 export const AUTOSOCIO_COURSES: AcademyCourse[] = [
   {
     id: 1,
-    title: 'Maestría en Sabiduría Estratégica Neurocognitiva',
-    category: 'Estrategia',
+    title: 'Prom Master Automotriz: Validación Técnica C1',
+    category: 'IA Aplicada',
     level: 'Certificación Alfa Elite',
-    duration: '12 Semanas',
-    enrolled: 1250,
+    duration: '10 Semanas',
+    enrolled: 1850,
     rating: 5.0,
-    image: 'https://images.unsplash.com/photo-1507413245164-6160d8298b31?auto=format&fit=crop&q=80&w=800',
+    image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=800',
     agentId: 100,
     isHighTicket: true,
-    roiEstimate: "Optimización del 40% en toma de decisiones críticas y eliminación de errores técnicos costosos."
+    roiEstimate: "Dominio de prompts especializados para la extracción forense de datos técnicos y validación de compatibilidad OEM."
   },
   {
     id: 2,
@@ -638,7 +817,7 @@ export const AUTOSOCIO_COURSES: AcademyCourse[] = [
     image: 'https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?auto=format&fit=crop&q=80&w=800',
     agentId: 100,
     isHighTicket: true,
-    roiEstimate: "Reducción del 25% en costos de garantía y aumento de autoridad técnica ante el cliente."
+    roiEstimate: "Reducción del 25% en costos de garantía mediante el uso de System Prompts de diagnóstico avanzado."
   },
   {
     id: 3,
@@ -671,7 +850,7 @@ export const AUTOSOCIO_COURSES: AcademyCourse[] = [
 export const CONNECTX_COURSES: AcademyCourse[] = [
   {
     id: 201,
-    title: 'Arquitectura de Monetización de Intención',
+    title: 'Prom Master: Arquitectura de System Prompts CX',
     category: 'Infraestructura',
     level: 'Certificación CX Elite',
     duration: '14 Semanas',
@@ -680,7 +859,7 @@ export const CONNECTX_COURSES: AcademyCourse[] = [
     image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=800',
     agentId: 201,
     isHighTicket: true,
-    roiEstimate: "Escalamiento de ingresos mediante automatización de validación técnica y afiliación controlada."
+    roiEstimate: "Diseño de arquitecturas cognitivas distribuidas. Creación de System Prompts para la activación comercial masiva."
   },
   {
     id: 202,
@@ -697,7 +876,7 @@ export const CONNECTX_COURSES: AcademyCourse[] = [
   },
   {
     id: 203,
-    title: 'Ingeniería de Prompt para Monetización de Nichos',
+    title: 'Ingeniería de Prompt para Monetización de Intención',
     category: 'IA Aplicada',
     level: 'Certificación CX Elite',
     duration: '8 Semanas',

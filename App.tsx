@@ -1,7 +1,9 @@
 
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
-import { AUTOSOCIO_AGENTS, CONNECTX_AGENTS, SUPPORTED_LANGUAGES, getLabels } from './constants';
-import type { Agent, UserProfile, Language, FunnelPhase, PsychMetrics, Platform, View, IntentObject } from './types';
+import { AUTOSOCIO_AGENTS, CONNECTX_AGENTS, SUPPORTED_LANGUAGES, getLabels, NICHES } from './constants';
+import type { Agent, UserProfile, Language, FunnelPhase, PsychMetrics, Platform, View, IntentObject, MysteryShopReport } from './types';
+import { motion, AnimatePresence } from 'motion/react';
+import OnboardingVisual from './components/OnboardingVisual';
 import AgentCard from './components/AgentCard';
 import AgentDetailModal from './components/AgentDetailModal';
 import AffiliateMarketplace from './components/AffiliateMarketplace';
@@ -18,7 +20,10 @@ import WisdomVault from './components/WisdomVault';
 import VisionAnalysis from './components/VisionAnalysis';
 import CXProtocolHub from './components/CXProtocolHub';
 import CXDashboard from './components/CXDashboard';
+import MysteryShopReportView from './components/MysteryShopReportView';
 import CogIcon from './components/icons/CogIcon';
+import ChatbotIcon from './components/icons/ChatbotIcon';
+import ClipboardIcon from './components/icons/ClipboardIcon';
 import SearchIcon from './components/icons/SearchIcon';
 import SparklesIcon from './components/icons/SparklesIcon';
 import AcademicIcon from './components/icons/AcademicIcon';
@@ -27,6 +32,7 @@ import UserGroupIcon from './components/icons/UserGroupIcon';
 import TruckIcon from './components/icons/TruckIcon';
 import DashboardIcon from './components/icons/DashboardIcon';
 import VerifiedIcon from './components/icons/VerifiedIcon';
+import CloseIcon from './components/icons/CloseIcon';
 import CartIcon from './components/icons/CartIcon';
 import MegaphoneIcon from './components/icons/MegaphoneIcon';
 import CameraIcon from './components/icons/CameraIcon';
@@ -40,9 +46,12 @@ const HomeIcon: React.FC<{ className?: string }> = ({ className = "w-5 h-5" }) =
 
 const App: React.FC = () => {
   const [isSystemInitializing, setIsSystemInitializing] = useState(true);
+  const [showOnboarding, setShowOnboarding] = useState(false);
+  const [showNicheSelector, setShowNicheSelector] = useState(false);
   const [currentPlatform, setCurrentPlatform] = useState<Platform>('connectx');
   const [activeView, setActiveView] = useState<View>('home');
   const [selectedAgent, setSelectedAgent] = useState<Agent | null>(null);
+  const [mysteryShopReport, setMysteryShopReport] = useState<MysteryShopReport | null>(null);
   const [showLangMenu, setShowLangMenu] = useState(false);
   const [initialAgentPrompt, setInitialAgentPrompt] = useState("");
   
@@ -74,7 +83,10 @@ const App: React.FC = () => {
   });
 
   useEffect(() => {
-    const timer = setTimeout(() => setIsSystemInitializing(false), 1500);
+    const timer = setTimeout(() => {
+      setIsSystemInitializing(false);
+      setShowOnboarding(true);
+    }, 1500);
     return () => clearTimeout(timer);
   }, []);
 
@@ -104,27 +116,50 @@ const App: React.FC = () => {
   const isConnectX = currentPlatform === 'connectx';
   const displayAgents = isConnectX ? CONNECTX_AGENTS : AUTOSOCIO_AGENTS;
 
+  const handleNicheChange = (nicheId: Platform) => {
+    const niche = NICHES.find(n => n.id === nicheId);
+    if (niche && (niche as any).externalUrl) {
+      window.open((niche as any).externalUrl, '_blank');
+      setShowNicheSelector(false);
+      return;
+    }
+    setCurrentPlatform(nicheId);
+    setShowNicheSelector(false);
+    setShowOnboarding(true);
+    setActiveView('home');
+  };
+
   if (isSystemInitializing) {
     return (
       <div className="fixed inset-0 bg-[#020617] z-[999] flex flex-col items-center justify-center">
         <div className="relative flex flex-col items-center gap-12 animate-fade-in">
           <div className="relative">
-            <div className="w-24 h-24 bg-indigo-600 rounded-[2rem] flex items-center justify-center shadow-[0_0_60px_rgba(79,70,229,0.4)] animate-pulse rotate-12">
-              <span className="font-heading font-black text-5xl text-white italic -rotate-12">X</span>
+            <div className={`w-24 h-24 ${isConnectX ? 'bg-indigo-600' : 'bg-cyan-600'} rounded-[2rem] flex items-center justify-center shadow-[0_0_60px_rgba(79,70,229,0.4)] animate-pulse rotate-12`}>
+              <span className="font-heading font-black text-5xl text-white italic -rotate-12">{isConnectX ? 'X' : 'A'}</span>
             </div>
-            <div className="absolute -inset-4 border border-indigo-500/20 rounded-[2.5rem] animate-spin-slow"></div>
+            <div className={`absolute -inset-4 border ${isConnectX ? 'border-indigo-500/20' : 'border-cyan-500/20'} rounded-[2.5rem] animate-spin-slow`}></div>
           </div>
           <div className="flex flex-col items-center gap-3">
             <h2 className="text-white font-black uppercase tracking-[0.6em] text-[10px] leading-none opacity-80">
               {isConnectX ? 'CONNECTX INFRASTRUCTURE' : 'AUTOSOCIO ECOSYSTEM'}
             </h2>
             <div className="flex items-center gap-2">
-              <div className="w-1.5 h-1.5 bg-indigo-500 rounded-full animate-ping"></div>
-              <p className="text-[9px] text-indigo-400 font-bold uppercase tracking-[0.4em]">Sincronizando Nodos...</p>
+              <div className={`w-1.5 h-1.5 ${isConnectX ? 'bg-indigo-500' : 'bg-cyan-500'} rounded-full animate-ping`}></div>
+              <p className={`text-[9px] ${isConnectX ? 'text-indigo-400' : 'text-cyan-400'} font-bold uppercase tracking-[0.4em]`}>Sincronizando Nodos...</p>
             </div>
           </div>
         </div>
       </div>
+    );
+  }
+
+  if (showOnboarding) {
+    return (
+      <OnboardingVisual 
+        platform={currentPlatform} 
+        labels={labels} 
+        onComplete={() => setShowOnboarding(false)} 
+      />
     );
   }
 
@@ -141,10 +176,10 @@ const App: React.FC = () => {
                 </div>
                 <div className="flex flex-col text-left">
                   <span className="text-3xl font-black text-white uppercase tracking-tighter leading-none">
-                    {isConnectX ? 'CONECTAX' : 'AUTOSOCIO'}
+                    {isConnectX ? 'CONNECT IQ' : 'AUTOSOCIO'}
                   </span>
                   <span className={`text-[9px] ${isConnectX ? 'text-indigo-500' : 'text-cyan-500'} font-black uppercase tracking-[0.5em] mt-1`}>
-                    {isConnectX ? 'INFRASTRUCTURE' : 'TECNOLOGÍA VEHICULAR'}
+                    {isConnectX ? 'AUTOSOURCE INFRASTRUCTURE' : 'TECNOLOGÍA VEHICULAR'}
                   </span>
                 </div>
             </button>
@@ -157,10 +192,24 @@ const App: React.FC = () => {
             </div>
             
             <button 
-              onClick={togglePlatform}
+              onClick={() => setShowNicheSelector(true)}
               className={`p-3.5 bg-white/5 border border-white/10 rounded-2xl transition-all shadow-xl hover:bg-white/10 group ${isConnectX ? 'text-indigo-400 border-indigo-500/30' : 'text-cyan-400 border-cyan-500/30'}`}
+              title="Selector de Realidad"
             >
               <CogIcon className="w-5 h-5 group-hover:rotate-90 transition-transform duration-500" />
+            </button>
+
+            <button 
+              onClick={() => {
+                // We'll trigger the Mystery Shop Auditor by finding its button or using a global state if we had one.
+                // For now, let's assume the component handles its own state but we can signal it.
+                const mysteryBtn = document.querySelector('.mystery-shop-trigger') as HTMLButtonElement;
+                if (mysteryBtn) mysteryBtn.click();
+              }}
+              className="p-3.5 bg-indigo-600/20 border border-indigo-500/30 rounded-2xl text-indigo-400 hover:bg-indigo-600/30 transition-all shadow-xl group"
+              title="Activar Mystery Shop"
+            >
+              <ChatbotIcon className="w-5 h-5 group-hover:scale-110 transition-transform" />
             </button>
 
             <div className="relative">
@@ -298,6 +347,13 @@ const App: React.FC = () => {
             {activeView === 'vision_analysis' && <VisionAnalysis />}
             {activeView === 'cx_protocol' && <CXProtocolHub />}
             {activeView === 'cx_dashboard' && <CXDashboard />}
+            {activeView === 'mystery_shop' && mysteryShopReport && (
+              <MysteryShopReportView 
+                report={mysteryShopReport} 
+                language={user.language} 
+                onClose={() => setActiveView('home')} 
+              />
+            )}
           </>
         )}
       </main>
@@ -353,6 +409,91 @@ const App: React.FC = () => {
         />
       )}
 
+      {/* NICHE SELECTOR MODAL */}
+      <AnimatePresence>
+        {showNicheSelector && (
+          <div className="fixed inset-0 z-[250] flex items-center justify-center p-6">
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setShowNicheSelector(false)}
+              className="absolute inset-0 bg-gray-950/90 backdrop-blur-2xl"
+            />
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: 20 }}
+              className="relative w-full max-w-4xl bg-[#020617] border border-white/10 rounded-[4rem] p-12 shadow-[0_0_100px_rgba(0,0,0,0.8)] overflow-hidden"
+            >
+              <div className="absolute top-0 right-0 w-96 h-96 bg-indigo-600/5 blur-[120px] -z-10"></div>
+              
+              <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8 mb-16">
+                <div className="space-y-4">
+                  <h2 className="text-5xl font-black text-white uppercase tracking-tighter leading-none italic">
+                    Selector de <span className="text-indigo-500">Realidad</span>
+                  </h2>
+                  <p className="text-gray-500 text-sm font-light uppercase tracking-widest">Elija el nodo de infraestructura o nicho especializado</p>
+                </div>
+                <button 
+                  onClick={() => setShowNicheSelector(false)}
+                  className="p-4 bg-white/5 rounded-2xl text-gray-400 hover:text-white transition-colors"
+                >
+                  <CloseIcon />
+                </button>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {NICHES.map((niche) => (
+                  <button 
+                    key={niche.id}
+                    onClick={() => handleNicheChange(niche.id as Platform)}
+                    className={`group relative p-8 rounded-[3rem] border transition-all duration-500 text-left flex flex-col gap-6 ${
+                      currentPlatform === niche.id 
+                        ? 'bg-indigo-600 border-indigo-400 shadow-2xl scale-105' 
+                        : 'bg-white/5 border-white/5 hover:border-white/20 hover:bg-white/[0.08]'
+                    }`}
+                  >
+                    <div className={`w-16 h-16 rounded-2xl flex items-center justify-center text-white shadow-xl transition-transform duration-500 group-hover:scale-110 group-hover:rotate-6 ${
+                      currentPlatform === niche.id ? 'bg-white/20' : `bg-${niche.color}-600/20`
+                    }`}>
+                      {niche.id === 'connectx' && <CogIcon className="w-8 h-8" />}
+                      {niche.id === 'autosocio' && <TruckIcon className="w-8 h-8" />}
+                      {niche.id === 'homesocio' && <HomeIcon className="w-8 h-8" />}
+                      {niche.id === 'legalsocio' && <VerifiedIcon className="w-8 h-8" />}
+                      {niche.id === 'consultsocio' && <SparklesIcon className="w-8 h-8" />}
+                      {niche.id === 'medsocio' && <ClipboardIcon className="w-8 h-8" />}
+                    </div>
+                    <div>
+                      <h4 className={`text-xl font-black uppercase tracking-tighter leading-none ${currentPlatform === niche.id ? 'text-white' : 'text-white group-hover:text-indigo-400'}`}>
+                        {niche.name}
+                      </h4>
+                      <p className={`text-[10px] font-medium mt-3 leading-relaxed italic ${currentPlatform === niche.id ? 'text-indigo-100' : 'text-gray-500'}`}>
+                        "{niche.description}"
+                      </p>
+                    </div>
+                    {currentPlatform === niche.id && (
+                      <div className="absolute top-6 right-6">
+                        <div className="w-3 h-3 bg-white rounded-full animate-pulse shadow-[0_0_10px_white]" />
+                      </div>
+                    )}
+                    {niche.externalUrl && (
+                      <div className="absolute top-6 right-6">
+                        <div className="text-white/40 group-hover:text-white transition-colors">
+                          <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                          </svg>
+                        </div>
+                      </div>
+                    )}
+                  </button>
+                ))}
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
       {/* MYSTERY SHOP AUDITOR - CAPA DE CALIDAD C1 */}
       <MysteryShopAuditor 
         language={user.language}
@@ -364,6 +505,10 @@ const App: React.FC = () => {
           isConnectX,
           selectedAgent: selectedAgent?.name
         }} 
+        onViewReport={(report) => {
+          setMysteryShopReport(report);
+          setActiveView('mystery_shop');
+        }}
       />
     </div>
   );

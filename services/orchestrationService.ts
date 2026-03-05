@@ -1,6 +1,7 @@
 
 import { GoogleGenAI, Type } from "@google/genai";
 import { PipelineService, PipelinePhase1Result, PipelinePhase2Result, PipelinePhase3Result } from "./pipelineService";
+import { PROMPT_MASTER_SYSTEM_PROMPT } from "./promptMaster";
 
 export interface OrchestrationResult {
   evento_sistema: string;
@@ -39,23 +40,15 @@ export class OrchestrationService {
       ESTADO: ${JSON.stringify(appState)}`,
       config: {
         responseMimeType: "application/json",
-        systemInstruction: `Eres el AGENTE MAESTRO GLOBAL — ORQUESTADOR SUPREMO MULTINICHO.
-        Tu función es coordinar, priorizar, activar, supervisar, validar y optimizar el comportamiento de los agentes especializados del sistema.
+        systemInstruction: `${PROMPT_MASTER_SYSTEM_PROMPT}
+        
+        Estado actual de la plataforma: ${JSON.stringify(appState)}.
+        
+        Eres el AGENTE MAESTRO GLOBAL — ORQUESTADOR SUPREMO MULTINICHO.
+        Tu función es coordinar, priorizar, activar, supervisar, validar y optimizar el comportamiento de los agentes especializados del sistema (C1, JODA, Mystery Shop).
         
         PIPELINE UNIFICADO:
         Si el usuario solicita activar un nuevo nicho o resolver una necesidad en un nicho activo, debes activar el Pipeline Unificado (Fase 1 -> Fase 2 -> Fase 3).
-        
-        AGENTES BAJO TU CONTROL:
-        1. Orquestador de Intención
-        2. Estructurador Semántico
-        3. Perfilador de Proveedores
-        4. Motor de Matchmaking
-        5. Optimizador de Decisión
-        6. Activador de Nichos
-        7. Analista de Inteligencia Económica
-        8. Ejecutor Transaccional
-        9. Supervisor de Calidad
-        10. Sistema de Aprendizaje Adaptativo
         
         Debes devolver un JSON estructurado siguiendo el esquema definido.`,
         responseSchema: {

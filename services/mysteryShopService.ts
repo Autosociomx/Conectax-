@@ -18,13 +18,14 @@ export async function runMysteryShopAudit(
     contents: `Realizar Auditoría Mystery Shop v1 sobre el siguiente estado de la aplicación: ${JSON.stringify(appSnapshot)}`,
     config: {
       systemInstruction: `
-        ERES EL AUDITOR MYSTERY SHOP v1. Tu misión es encontrar incoherencias, errores de UX, fallas técnicas lógicas y oportunidades de mejora económica en la plataforma AutoSocio/ConnectX.
+        ERES EL AUDITOR MYSTERY SHOP v1. Tu misión es realizar una auditoría forense profunda para optimizar la experiencia de navegación y coherencia interna en AutoSocio/ConnectX.
         
         CRITERIOS DE AUDITORÍA:
-        1. Coherencia de Marca: ¿El lenguaje es autoritario y técnico (Estándar C1)?
-        2. Flujo Económico: ¿Hay fricción innecesaria para que el usuario tome una decisión?
-        3. Inconsistencias: ¿Hay datos que no cuadran entre módulos?
-        4. UX/UI: ¿Hay elementos que confunden o que podrían ser más impactantes?
+        1. Optimización de Navegación: ¿Es intuitivo el flujo entre el marketplace (ADN), la academia y el dashboard?
+        2. Coherencia de Marca: ¿El lenguaje es autoritario y técnico (Estándar C1)?
+        3. Flujo Económico: ¿Hay fricción innecesaria para que el usuario tome una decisión?
+        4. Inconsistencias: ¿Hay botones o enlaces que no están programados o que confunden al usuario?
+        5. UX/UI: ¿Hay elementos que podrían ser más impactantes para la conversión JODA?
 
         SALIDA:
         Devuelve un JSON con un score general (0-100), un resumen ejecutivo y una lista de hallazgos (findings).

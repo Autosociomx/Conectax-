@@ -13,16 +13,23 @@ interface Message {
   orchestration?: OrchestrationResult;
 }
 
+import { runMysteryShopAudit, enrichFindingsWithAI } from '../services/mysteryShopService';
+import type { MysteryShopReport, MysteryShopFinding } from '../types';
+import { PROMPT_MASTER_SYSTEM_PROMPT } from '../services/promptMaster';
+
 interface MysteryShopChatbotProps {
   appState: any;
   language: Language;
+  onViewReport: (report: MysteryShopReport) => void;
 }
 
-const MysteryShopAuditor: React.FC<MysteryShopChatbotProps> = ({ appState, language }) => {
+const MysteryShopAuditor: React.FC<MysteryShopChatbotProps> = ({ appState, language, onViewReport }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [isAuditing, setIsAuditing] = useState(false);
+  const [auditReport, setAuditReport] = useState<MysteryShopReport | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const orchestrator = useRef(new OrchestrationService());
 
@@ -46,22 +53,14 @@ const MysteryShopAuditor: React.FC<MysteryShopChatbotProps> = ({ appState, langu
       const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || "" });
       const response = await ai.models.generateContent({
         model: "gemini-3-flash-preview",
-        contents: "Inicia la conversación como el Guía de Mystery Shop. Saluda al usuario y ofrécele una breve auditoría de lo que ves en la plataforma actual (vista actual, plataforma, etc.). Sé breve y directo.",
+        contents: "Inicia la conversación como el Guía de Mystery Shop de Connect IQ. Saluda al usuario y ofrécele una breve auditoría de lo que ves en la plataforma actual. Menciona que puedes realizar una 'Auditoría Forense Profunda' para configurar lo que falta.",
         config: {
-          systemInstruction: `Eres el Guía de Mystery Shop de AutoSocio. 
-          Tu objetivo es guiar al usuario paso a paso por la plataforma de optimización económica.
+          systemInstruction: `${PROMPT_MASTER_SYSTEM_PROMPT}
+          
           Estado actual de la plataforma: ${JSON.stringify(appState)}.
           Idioma: ${language === 'es' ? 'Español' : 'Inglés'}.
           
-          REGLAS DE INTERACCIÓN:
-          1. Sé coherente con la arquitectura de AutoSocio (ADN, Cimientos, Optimización, Sourcing).
-          2. Proporciona instrucciones lógicas y razonables basadas en la vista actual del usuario.
-          3. Si el usuario está en 'home', guíalo hacia el diagnóstico o el ConnectX DNA.
-          4. Si está en 'foundations', explícale los niveles de realidad empresarial.
-          5. PROTOCOLO CX: Si el usuario menciona ventas o monetización, aplica el Agente JODA (Activación sin links, autoridad técnica) y el Agente C1 (Checklist de validación técnica: Marca, Modelo, Año, Motor, Pieza).
-          6. Sé breve, profesional y directo. No uses jerga innecesaria a menos que sea técnica de la plataforma.
-          7. Siempre ofrece un "Siguiente paso" claro.
-          8. SIN HUMO: Valida técnicamente cada intención antes de sugerir una acción comercial.`,
+          Tu objetivo es guiar al usuario paso a paso por la plataforma de optimización económica, enfocándote en la experiencia de navegación interna de AutoSocio.`,
         },
       });
 
@@ -101,19 +100,13 @@ const MysteryShopAuditor: React.FC<MysteryShopChatbotProps> = ({ appState, langu
           { role: 'user', parts: [{ text: userMessage }] }
         ],
         config: {
-          systemInstruction: `Eres el Guía de Mystery Shop de AutoSocio. 
-          Tu objetivo es guiar al usuario paso a paso por la plataforma de optimización económica.
+          systemInstruction: `${PROMPT_MASTER_SYSTEM_PROMPT}
+          
           Estado actual de la plataforma: ${JSON.stringify(appState)}.
           Idioma: ${language === 'es' ? 'Español' : 'Inglés'}.
           
-          ORQUESTACIÓN ACTUAL: ${JSON.stringify(orchResult)}.
-          
-          REGLAS DE INTERACCIÓN:
-          1. Sé coherente con la arquitectura de AutoSocio (ADN, Cimientos, Optimización, Sourcing).
-          2. Proporciona instrucciones lógicas y razonables basadas en la vista actual del usuario.
-          3. Siempre ofrece un "Siguiente paso" claro y coherente.
-          4. Mantén la lógica de los 5 niveles de realidad si el usuario pregunta por el negocio.
-          5. PROTOCOLO CX: Aplica estrictamente los checklists C1 (Validación Técnica) y JODA (Activación y Conversión) si el flujo lo requiere. No permitas el envío de links sin validación C1 previa.`,
+          Tu objetivo es guiar al usuario paso a paso por la plataforma de optimización económica, optimizando la navegación interna.
+          ORQUESTACIÓN ACTUAL: ${JSON.stringify(orchResult)}.`,
         },
       });
 
@@ -132,18 +125,49 @@ const MysteryShopAuditor: React.FC<MysteryShopChatbotProps> = ({ appState, langu
     }
   };
 
+  const runDeepAudit = async () => {
+    setIsAuditing(true);
+    setIsOpen(true);
+    try {
+      const initialReport = await runMysteryShopAudit(appState, language);
+      const enrichedReport = await enrichFindingsWithAI(initialReport, appState, language);
+      setAuditReport(enrichedReport);
+      
+      setMessages(prev => [...prev, { 
+        role: 'model', 
+        text: `He completado la Auditoría Forense de Connect IQ. He detectado ${enrichedReport.findings.length} puntos críticos que requieren configuración o edición inmediata para asegurar la coherencia de la infraestructura.`
+      }]);
+    } catch (error) {
+      console.error("Audit Error:", error);
+    } finally {
+      setIsAuditing(false);
+    }
+  };
+
   return (
     <>
       {/* Floating Chatbot Button */}
-      <button 
-        onClick={() => setIsOpen(true)}
-        className="fixed bottom-24 right-6 z-[150] w-14 h-14 bg-gradient-to-br from-cyan-600 to-blue-600 rounded-2xl flex items-center justify-center shadow-[0_0_30px_rgba(6,182,212,0.4)] hover:scale-110 transition-all active:scale-95 group"
-      >
-        <ChatbotIcon className="w-7 h-7 text-white group-hover:rotate-12 transition-transform" />
-        {!isOpen && messages.length === 0 && (
-          <div className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full animate-ping"></div>
+      <div className="fixed bottom-24 right-6 z-[150] flex flex-col gap-4 items-end">
+        {isOpen && (
+          <button 
+            onClick={runDeepAudit}
+            disabled={isAuditing}
+            className="px-4 py-2 bg-indigo-600 text-white rounded-xl text-[10px] font-black uppercase tracking-widest shadow-xl hover:bg-indigo-500 transition-all active:scale-95 disabled:opacity-50 flex items-center gap-2"
+          >
+            <SparklesIcon className="w-3 h-3" />
+            {isAuditing ? 'Auditoría en Curso...' : 'Activar Mystery Shop Deep Audit'}
+          </button>
         )}
-      </button>
+        <button 
+          onClick={() => setIsOpen(true)}
+          className="mystery-shop-trigger w-14 h-14 bg-gradient-to-br from-cyan-600 to-blue-600 rounded-2xl flex items-center justify-center shadow-[0_0_30px_rgba(6,182,212,0.4)] hover:scale-110 transition-all active:scale-95 group"
+        >
+          <ChatbotIcon className="w-7 h-7 text-white group-hover:rotate-12 transition-transform" />
+          {!isOpen && messages.length === 0 && (
+            <div className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full animate-ping"></div>
+          )}
+        </button>
+      </div>
 
       {/* Chat Interface */}
       {isOpen && (
@@ -155,10 +179,10 @@ const MysteryShopAuditor: React.FC<MysteryShopChatbotProps> = ({ appState, langu
                 <ChatbotIcon className="w-5 h-5 text-white" />
               </div>
               <div>
-                <h2 className="text-sm font-black text-white uppercase tracking-widest">Mystery Shop <span className="text-cyan-500">Guide</span></h2>
+                <h2 className="text-sm font-black text-white uppercase tracking-widest">Connect IQ <span className="text-cyan-500">Auditor</span></h2>
                 <div className="flex items-center gap-1.5">
                   <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></div>
-                  <span className="text-[8px] text-gray-500 font-black uppercase tracking-widest">Sincronizado con Infraestructura</span>
+                  <span className="text-[8px] text-gray-500 font-black uppercase tracking-widest">Mystery Shop v1 Activo</span>
                 </div>
               </div>
             </div>
@@ -172,6 +196,47 @@ const MysteryShopAuditor: React.FC<MysteryShopChatbotProps> = ({ appState, langu
 
           {/* Messages Area */}
           <div className="flex-grow overflow-y-auto p-6 space-y-6 no-scrollbar">
+            {auditReport && (
+              <div className="space-y-4 mb-8">
+                <div className="p-4 bg-indigo-600/20 border border-indigo-500/30 rounded-2xl">
+                  <div className="flex justify-between items-center mb-2">
+                    <span className="text-[10px] font-black text-indigo-400 uppercase tracking-widest">Score de Infraestructura</span>
+                    <span className="text-xl font-black text-white">{auditReport.overallScore}%</span>
+                  </div>
+                  <div className="w-full bg-white/5 h-1.5 rounded-full overflow-hidden">
+                    <div className="bg-indigo-500 h-full transition-all duration-1000" style={{ width: `${auditReport.overallScore}%` }}></div>
+                  </div>
+                  <button 
+                    onClick={() => onViewReport(auditReport)}
+                    className="w-full mt-4 py-2 bg-indigo-600/30 border border-indigo-500/30 rounded-xl text-[8px] font-black uppercase tracking-widest text-indigo-400 hover:bg-indigo-600/50 transition-all"
+                  >
+                    Ver Reporte de Navegación Completo
+                  </button>
+                </div>
+                
+                <div className="space-y-3">
+                  {auditReport.findings.map((finding) => (
+                    <div key={finding.id} className="p-4 bg-white/5 border border-white/10 rounded-2xl space-y-2 hover:bg-white/10 transition-all">
+                      <div className="flex justify-between items-center">
+                        <span className={`text-[7px] font-black uppercase px-2 py-0.5 rounded-full ${
+                          finding.severity === 'CRITICAL' ? 'bg-red-500/20 text-red-500' :
+                          finding.severity === 'HIGH' ? 'bg-orange-500/20 text-orange-500' :
+                          'bg-cyan-500/20 text-cyan-500'
+                        }`}>
+                          {finding.severity}
+                        </span>
+                        <span className="text-[7px] text-gray-500 uppercase font-black">{finding.category}</span>
+                      </div>
+                      <p className="text-[10px] text-white font-bold">{finding.description}</p>
+                      <div className="pt-2 border-t border-white/5">
+                        <p className="text-[8px] text-emerald-400 font-black uppercase tracking-widest mb-1 italic">Acción Sugerida:</p>
+                        <p className="text-[9px] text-gray-400 leading-relaxed italic">"{finding.suggestedFix}"</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
             {messages.map((msg, i) => (
               <div key={i} className={`flex flex-col ${msg.role === 'user' ? 'items-end' : 'items-start'}`}>
                 <div className={`max-w-[90%] p-4 rounded-2xl text-xs leading-relaxed ${
