@@ -50,7 +50,7 @@ export type AuditScenario = 'EDUCATION' | 'MONETIZATION' | 'CREATOR_API';
 
 export type FunnelPhase = 'ATTRACTION' | 'DIAGNOSTIC' | 'STRATEGY' | 'CLOSING';
 
-export type View = 'home' | 'academy' | 'consulting' | 'marketplace' | 'fleet' | 'dashboard' | 'admin' | 'mystery_shop' | 'foundations' | 'optimization' | 'wisdom_vault' | 'vision_analysis' | 'cx_protocol' | 'cx_dashboard';
+export type View = 'home' | 'academy' | 'consulting' | 'marketplace' | 'fleet' | 'dashboard' | 'admin' | 'mystery_shop' | 'foundations' | 'optimization' | 'wisdom_vault' | 'vision_analysis' | 'cx_protocol' | 'cx_dashboard' | 'nexus';
 
 export interface FoundationalLevel {
   level: number;

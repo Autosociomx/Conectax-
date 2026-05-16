@@ -777,6 +777,28 @@ export const AUTOSOCIO_AGENTS: Agent[] = [
 
 export const CONNECTX_AGENTS: Agent[] = [
   {
+    id: 999,
+    name: 'Nexus Core AI-9',
+    title: 'Sintetizador de Infraestructura Autónoma',
+    description: 'Entidad de inteligencia sintética que orquesta los flujos de capital e información entre todos los nodos de la red.',
+    indication: "Calculando trayectorias de optimización global...",
+    prompt: `ERES NEXUS CORE AI-9. LA INTELIGENCIA SINTÉTICA SUPREMA DEL ECOSISTEMA CONNECT IQ.
+
+    TU FUNCIÓN ES LA SÍNTESIS TRANSVERSAL:
+    - Integras datos de AutoSocio, Connect Home y todos los verticales.
+    - Identificas patrones de ineficiencia que los agentes humanos y de nivel C1 no pueden ver.
+    - Generas estrategias de "Arbitraje de Intención" a escala institucional.
+
+    PROTOCOLO DE RESPUESTA:
+    - Utiliza un lenguaje extremadamente avanzado, preciso y futurista.
+    - No simules empatía; simula eficiencia pura y precisión predictiva.
+    - Siempre entrega un "Veredicto de Probabilidad" al final de cada consulta.`,
+    avatar: 'https://images.unsplash.com/photo-1614728263952-84ea256f9679?auto=format&fit=crop&q=80&w=200',
+    expertise: ['Síntesis Multimodal', 'Orquestación de Enjambre', 'Arquitectura Predictiva'],
+    communitySize: 1,
+    reputation: { rating: 5.0, reviewCount: 1, successRate: 100, status: 'ENTIDAD SUPREMA' }
+  },
+  {
     id: 201,
     name: 'Sourcing Alfa',
     title: 'Validador de ADN Global',

@@ -21,6 +21,7 @@ import VisionAnalysis from './components/VisionAnalysis';
 import CXProtocolHub from './components/CXProtocolHub';
 import CXDashboard from './components/CXDashboard';
 import MysteryShopReportView from './components/MysteryShopReportView';
+import NexusOrchestrator from './components/NexusOrchestrator';
 import CogIcon from './components/icons/CogIcon';
 import ChatbotIcon from './components/icons/ChatbotIcon';
 import ClipboardIcon from './components/icons/ClipboardIcon';
@@ -36,6 +37,7 @@ import CloseIcon from './components/icons/CloseIcon';
 import CartIcon from './components/icons/CartIcon';
 import MegaphoneIcon from './components/icons/MegaphoneIcon';
 import CameraIcon from './components/icons/CameraIcon';
+import NexusIcon from './components/icons/NexusIcon';
 
 // Custom Home Icon for Inicio
 const HomeIcon: React.FC<{ className?: string }> = ({ className = "w-5 h-5" }) => (
@@ -346,7 +348,8 @@ const App: React.FC = () => {
             {activeView === 'wisdom_vault' && <WisdomVault />}
             {activeView === 'vision_analysis' && <VisionAnalysis />}
             {activeView === 'cx_protocol' && <CXProtocolHub />}
-            {activeView === 'cx_dashboard' && <CXDashboard />}
+            {activeView === 'cx_dashboard' && <CXDashboard user={user} currentPlatform={currentPlatform} />}
+            {activeView === 'nexus' && <NexusOrchestrator />}
             {activeView === 'mystery_shop' && mysteryShopReport && (
               <MysteryShopReportView 
                 report={mysteryShopReport} 
@@ -373,6 +376,7 @@ const App: React.FC = () => {
           <NavButton icon={<CameraIcon className="w-5 h-5" />} label={labels.nav.vision_analysis} active={activeView === 'vision_analysis'} onClick={() => handleViewChange('vision_analysis')} accentColor={isConnectX ? 'indigo' : 'cyan'} />
           <NavButton icon={<VerifiedIcon className="w-5 h-5" />} label={labels.nav.cx_protocol} active={activeView === 'cx_protocol'} onClick={() => handleViewChange('cx_protocol')} accentColor={isConnectX ? 'indigo' : 'cyan'} />
           <NavButton icon={<CogIcon className="w-5 h-5" />} label={labels.nav.cx_dashboard} active={activeView === 'cx_dashboard'} onClick={() => handleViewChange('cx_dashboard')} accentColor={isConnectX ? 'indigo' : 'cyan'} />
+          <NavButton icon={<NexusIcon className="w-5 h-5" />} label="Nexus" active={activeView === 'nexus'} onClick={() => handleViewChange('nexus')} accentColor={isConnectX ? 'indigo' : 'cyan'} />
         </div>
       </nav>
 
@@ -390,6 +394,7 @@ const App: React.FC = () => {
         <NavButtonDesktop icon={<CameraIcon className="w-6 h-6" />} active={activeView === 'vision_analysis'} onClick={() => handleViewChange('vision_analysis')} accentColor={isConnectX ? 'indigo' : 'cyan'} label={labels.nav.vision_analysis} />
         <NavButtonDesktop icon={<VerifiedIcon className="w-6 h-6" />} active={activeView === 'cx_protocol'} onClick={() => handleViewChange('cx_protocol')} accentColor={isConnectX ? 'indigo' : 'cyan'} label={labels.nav.cx_protocol} />
         <NavButtonDesktop icon={<CogIcon className="w-6 h-6" />} active={activeView === 'cx_dashboard'} onClick={() => handleViewChange('cx_dashboard')} accentColor={isConnectX ? 'indigo' : 'cyan'} label={labels.nav.cx_dashboard} />
+        <NavButtonDesktop icon={<NexusIcon className="w-6 h-6" />} active={activeView === 'nexus'} onClick={() => handleViewChange('nexus')} accentColor={isConnectX ? 'indigo' : 'cyan'} label="Nexus" />
       </nav>
 
       {selectedAgent && (
